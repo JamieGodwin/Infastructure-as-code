@@ -22,3 +22,4 @@ Under the section that says "# - A hostname/ip can be a member of multiple group
 192.168.33.10 ansible_connection=ssh ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
 - If we do the command `sudo ansible web -m ping` we should get the message.
 ![](1.2.png)
+- Note: if this doesn't work, we can do `sudo nano ansible.cfg` and un-comment the `host_key_checking = False`. This however isn't usually recomended. 
