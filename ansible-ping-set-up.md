@@ -56,7 +56,7 @@ In the playbook we then put:
 
 - hosts: web
 
-# Gain additional facts about the steps (optional)
+# Gain additional facts about the steps
 
   gather_facts: yes
 # add admin access
@@ -110,25 +110,25 @@ In the playbook we then put:
 
 ## Add the tasks
 ```
-`---`
-`- hosts: web`
+---
+- hosts: web
 
-`# gather additional facts about the steps`
+# gather additional facts about the steps
  
-  `gather_facts: yes`
-`# give admin access to this file`
+  gather_facts: yes
+# give admin access to this file
   
-  `become: true`
+  become: true
 
-`# task: get app folder on web agent`
+# task: get app folder on web agent
   
-  `tasks:`
+  tasks:
   
-  `- name: Copy App folder`
+  - name: Copy App folder
      
-    `copy:`
-      `src: /etc/app/app`
-      `dest: /home/vagrant/`
+    copy:
+      src: /etc/app/app
+      dest: /home/vagrant/
 ```
 
 - We can then run:
