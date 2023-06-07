@@ -21,7 +21,7 @@
 ### What is it?
 Ansible is an open-source configuration management and automation tool that we can use for infastructure as code (IaC).
 
-It provides a simple and efficient way to automate infrastructure management, making it easier to achieve consistency, scalability, and reproducibility across different environments.
+It provides a simple and efficient way to automate infrastructure management, making it easier to achieve consistency, scalability, and reproducibility across our network.
 ### why do we use it?
 - It is simple to use, and doesn't require a lot of code.
 - It can run thousands of servers at once.
