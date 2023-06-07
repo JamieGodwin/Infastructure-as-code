@@ -211,3 +211,60 @@ sudo nano app.yml
 sudo ansible-playbook app.yml
 ```
 ![](1.5.png)
+
+## Setting up the db server
+- We first need to make a playbook in the controller:
+```
+sudo nano setup_mongo.yml
+```
+- In here, we then add the following:
+```
+---
+# Hosts name
+- hosts: db
+
+# Gather facts
+  gather_facts: yes
+
+# admin access
+  become: true
+
+# add instructions
+  tasks:
+  - name: setting up monodb
+    apt: pkg=mongodb state=present
+```
+
+We then run this by:
+```
+sudo ansible-playbook mongo.yml
+```
+We can check the status by doing:
+```
+sudo ansible db -a "sudo systemctl status mongodb"
+```
+### Working in the db VM
+- We navigate to the etc directory and do:
+```
+sudo nano mongodb.conf
+```
+- In here we need to change the bind ip to `0.0.0.0` and un-comment the port number. 
+- We can now do:
+```
+sudo systemctl restart mongodb
+sudo systemctl enable mongodb
+sudo systemctl status mongodb
+```
+## Working in the app VM
+- We need to edit the .bashrc file with:
+```
+sudo nano .bashrc
+```
+- At the bottom of this file, we then add:
+``` 
+export DB_HOST=mongodb://192.168.33.11:27017/posts
+```
+- We can then cd into the app and run:
+```
+npm start
+```
