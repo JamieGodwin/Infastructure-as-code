@@ -1,3 +1,32 @@
+
+# Infastructure as code
+## What is it?
+- It's a way of setting up your server infastructure using code instead of manual configuration.
+- By using code you can automate the process.
+- The nodes refer to the individual virtual machines that make up the infastructure.
+-  Instead of manually setting up and configuring servers and networks, IaC lets developers define/manage their infrastructure using code.
+
+## How is it usually used?
+- Ansible, Chef, and Puppet are commonly used for configuration. 
+- Azure Resource Manager, AWS and Google Cloud Deployment Manager can be used as tools within the cloud.
+- Terraform and CloudFormation are commonly used for terraform.
+
+## What are the benefits?
+- Scalability: Infastructure as code gives the ability to provision and configure infrastructure automatically and at a desired scale, reducing the time required for manual provisioning.
+- Version control: Infrastructure code can be stored in version control systems, allowing teams to track changes, collaborate, and use previous versions if needed.
+- Easy to reproduce: Because we can use version control,infrastructure can be consistently reproduced across multiple environments, allowing for more consistency and reducing the time it takes.
+- Fast change: Changes to the infrastructure can be made through one controller, allowing for fast development.
+![](1.1.png)
+## Ansible
+### What is it?
+Ansible is an open-source configuration management and automation tool that we can use for infastructure as code (IaC).
+
+It provides a simple and efficient way to automate infrastructure management, making it easier to achieve consistency, scalability, and reproducibility across different environments.
+### why do we use it?
+- It is simple to use, and doesn't require a lot of code.
+- It can run thousands of servers at once.
+- Agentless =  The virtual machines we access (aget nodes) don't need Ansible installed. Ansible only needs to be on the controller node. The Ansible Controller is where you are able to control everything.
+
 # How to set up ping in ansible
 We must first have vagrant open. In here, we add the vagrant file that we are using for Iac and `vagrant up`. After this, we `vagrant ssh controller, web and db` and do `sudo apt-get update` and `sudo apt-get upgrade` in each one. 
 ## Working in the terminal 
@@ -43,6 +72,9 @@ They allow you to run bash commands in ansible.
 
 
 ## Ansible playbook
+Playbooks are written in YAML, and allow us to write a series of tasks tasks that we want our agent nodes to perform, allowing us to automate this.
+
+
 - We create a playbook for the nginx:
 
 `sudo nano nginx.yml`
@@ -178,3 +210,4 @@ sudo nano app.yml
 ```
 sudo ansible-playbook app.yml
 ```
+![](1.5.png)
