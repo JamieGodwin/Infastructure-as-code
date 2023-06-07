@@ -268,3 +268,42 @@ export DB_HOST=mongodb://192.168.33.11:27017/posts
 ```
 npm start
 ```
+## Putting mongodb into one playbook
+```
+---
+# hosts name
+- hosts: db
+# get facts/logs
+  gather_facts: yes
+# admin access
+  become: true
+# add instructions:
+# install mongodb
+  tasks:
+  - name: Set Up mongodb
+    apt: pkg=mongodb state=present
+# ensure db is running 
+# replace the bind-ip to allow access from all ip addresses
+  - name: Change bindIP to allow access
+    replace:
+      path: /etc/mongodb.conf
+      regexp: 'bind_ip = 127.0.0.1'
+      replace: 'bind_ip = 0.0.0.0'
+# uncomment port = 27017
+  - name: make sure that port 27017 is uncommented
+    replace:
+      path: /etc/mongodb.conf
+      regexp: '#port = 27017'
+      replace: 'port = 27017'
+# restart mongodb with the changes made
+  - name: Restart mongodb 
+    systemd:
+      name: mongodb
+      state: restarted
+# enables mongodb
+  - name: Enable mongodb 
+    systemd:
+      name: mongodb
+      enabled: yes
+```
+- This should automate the db database. 
