@@ -353,7 +353,7 @@ terraform apply
 terraform destroy
 ```
 ## Create a vpc
-
+```
 provider "aws" {    
     region = "eu-west-1"
 
@@ -402,3 +402,4 @@ resource "aws_route_table_association" "public_association" {
     subnet_id= aws_subnet.public_subnet.id
     route_table_id = aws_route_table.public_route_table.id
 }
+```
