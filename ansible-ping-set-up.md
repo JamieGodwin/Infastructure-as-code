@@ -307,3 +307,98 @@ npm start
       enabled: yes
 ```
 - This should automate the db database. 
+
+# Terraform
+Terraform is a method of IaC. It allows you to to define and manage your infastructure resources, like virtual machines, VPC's, storage, ...
+
+## Launching an ec2 instance
+- We must have our public and private access keys added so terraform can connect to AWS.
+- We can then create a file to run our code in:
+``` 
+# To create a service on AWS cloud
+# launch an ec2 in Ireland
+# terraform to download required packages
+# terraform init
+
+provider "aws" {
+# Which region of aws
+        region = "eu-west-1"
+
+}
+# Git bash must have admin access
+# Launch an ec2
+
+# Which resource -
+resource "aws_instance" "app_instance"{
+
+# which AMI - ununtu 18.04
+ami = "Insert the ami we want to use"
+# type of instance - t2.micro
+instance_type="t2.micro"
+# do you need public ip = yes
+associate_public_ip_address = true
+# what should we call it
+tags = {
+        Name = "Insert instance name"
+       }
+
+}
+```
+- Note: The indentation matters
+- We then can run the code
+```
+terraform init
+terraform plan
+terraform apply
+terraform destroy
+```
+## Create a vpc
+
+provider "aws" {    
+    region = "eu-west-1"
+
+}
+resource "aws_vpc" "my_vpc"{
+        cidr_block = "10.0.0.0/16"
+
+tags = {
+        Name = "tech-230-jamie-vpc-terraform"}
+}
+
+resource "aws_subnet" "my_subnet" {
+        vpc_id = aws_vpc.my_vpc.id
+        cidr_block = "10.0.2.0/24"
+        availability_zone = "eu-west-1a"
+        tags = {
+                Name = "tech230-jamie-subnet-terraform"
+}
+}
+resource "aws_subnet" "private_subnet" {
+    vpc_id = aws_vpc.my_vpc.id
+    cidr_block = "10.0.3.0/24"
+    availability_zone = "eu-west-1b"tags = {
+        Name = "tech230-jamie-private-subnet-terraform"
+    }
+}
+resource "aws_vpc_attachment" "my_attachment" {
+    vpc_id = aws_vpc.my_vpc.id
+    internet_gateway_id = aws_internet_gateway.my_igw.id
+}
+
+resource "aws_route_table" "public_route_table" {
+    vpc_id = aws_vpc.my_vpc.id
+    tags = {
+        Name = "tech230-jamie-route-table-terraform"
+    }
+}
+
+resource "aws_route" "public_route" {
+    route_table_id = aws_route_table.public_route_table.id 
+    destination_cidr_block = "0.0.0.0/0"
+    gateway_id= aws_internet_gateway.my_igw.id
+}
+
+resource "aws_route_table_association" "public_association" {
+    subnet_id= aws_subnet.public_subnet.id
+    route_table_id = aws_route_table.public_route_table.id
+}
