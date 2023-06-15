@@ -5,16 +5,16 @@ metadata:
   name: nginx-deployment
 spec:
   selector:
-    matchlabels:
+    matchLabels:
       app: nginx
   replicas: 3
   template:
     metadata:
-      Labels:
+      labels:
         app: nginx
   spec: 
     containers:
-  - name: nginx
-  image: jamiegodwin1/jamie-tech230-nginx:latest
-  ports: 
-  - ContainerPort: 80
+      - name: nginx
+    image: jamiegodwin1/jamie-tech230-nginx:latest
+    ports: 
+      - containerPort: 80
